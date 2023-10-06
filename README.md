@@ -24,12 +24,14 @@ For Tesseract OCR, you may need to download and install it separately. Ensure yo
 
 Clone this repository to your local machine:
 ```bash
-git clone https://github.com/yourusername/license-plate-recognition.git
+git clone https://github.com/PRATIKK0709/LNPD
+cd LNPD
 ```
+
 Replace ./audi.jpg with the path to the image containing the license plate you want to recognize.
 Run the Python script:
 ```bash
-python license_plate_recognition.py
+python main.py
 ```
 The code will process the image, detect the license plate, extract the number, and save it in a text file along with the date and time.
 
