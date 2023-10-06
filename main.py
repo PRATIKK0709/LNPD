@@ -2,7 +2,9 @@ import cv2
 import imutils
 import numpy as np
 import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r'/opt/homebrew/bin/tesseract'
+import datetime
+
+pytesseract.pytesseract.tesseract_cmd = r'path to tesseract'
 
 img = cv2.imread('./audi.jpg', cv2.IMREAD_COLOR)
 img = cv2.resize(img, (600, 400))
@@ -37,6 +39,7 @@ mask = np.zeros(gray.shape, np.uint8)
 new_image = cv2.drawContours(mask, [screenCnt], 0, 255, -1)
 new_image = cv2.bitwise_and(img, img, mask=mask)
 
+
 (x, y) = np.where(mask == 255)
 (topx, topy) = (np.min(x), np.min(y))
 (bottomx, bottomy) = (np.max(x), np.max(y))
@@ -44,12 +47,19 @@ Cropped = gray[topx:bottomx + 1, topy:bottomy + 1]
 
 text = pytesseract.image_to_string(Cropped, config='--psm 11')
 
-# Save the detected license plate number in a text file
+# Get the current date and time
+current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+# Create the text to be saved
+output_text = f"{text} "
+datetimesave = f"{current_datetime}"
+
+# Save the detected license plate number and date/time in the specified format in a text file
 with open("detected_license_plate.txt", "w") as text_file:
-    text_file.write(text)
+    text_file.write(f"output_text | datetimesave")
 
 print("programming_fever's License Plate Recognition\n")
-print("Detected license plate Number is:", text)
+print(f"Detected license plate Number is: {text}")
 img = cv2.resize(img, (500, 300))
 Cropped = cv2.resize(Cropped, (400, 200))
 cv2.imshow('car', img)
